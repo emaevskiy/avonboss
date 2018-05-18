@@ -1,0 +1,409 @@
+/* mixins */
+
+// @mixin btnColor($bg, $font) {background-color: $bg; border: 2px solid darken($bg, 10%); color: $font;}
+
+@mixin btnColor($bg, $font) {background-color: $bg; border: 2px solid $bg; color: $font;}
+
+@mixin size($width, $height) {width: $width; height: $height;}
+
+@mixin fullSize($top: 0, $right: 0, $bottom: 0, $left: 0) {top: $top; right: $right; bottom: $bottom; left: $left;}
+
+
+/* display */
+
+$min-display-width: 320px;
+
+$display-xs: 576px;
+$display-sm: 768px;
+$display-md: 992px;
+$display-lg: 1200px;
+$display-xl: 1440px;
+
+
+/* colors */
+$main-color: #ed008c;
+
+
+/* fonts */
+
+@font-face {
+  font-family: 'BravoRegular';
+  font-weight: normal;
+  src: url('../fonts/ProximaNova/BravoRegular.woff') format("woff");
+}
+
+
+/* base */
+
+* {box-sizing: border-box;}
+
+html {min-height: 100vh; height: 100%; line-height: 1; font-size: 14px;}
+body {height: 100%; overflow-x: hidden; background-size: cover; min-width: $min-display-width;}
+
+h1, h2, h3, h4, h5, h6 {margin: 0;}
+
+img {width: 100%;}
+
+
+.header {position: relative; background: url('../img/avon_2.jpg') center top no-repeat #ffffff; background-size: cover; min-height: 100vh; overflow: hidden;
+  &::before {content: ''; position: absolute; @include fullSize(); background: rgba(120, 0, 70, .3); background: rgba(0, 0, 0, .3); background: url('../img/black-squares.png') center repeat rgba(0, 0, 0, .6); z-index: 1;}
+  &-video {position: absolute; top: 0; @include size(100%, 100%); z-index: 0; object-fit: cover;}
+  &-topbar {position: relative; z-index: 2;}
+  &-title {position: relative; font-size: 60px; font-weight: 600; text-align: center; line-height: 1; color: #ffffff; padding: 30% 0 50px; z-index: 2; text-shadow: 0 0 5px rgba(0,0,0,.6);}
+  &-button {position: relative; text-align: center; z-index: 2;
+    .button {font-size: 25px;}
+  }
+}
+
+
+.topbar {background-color: rgba(255,255,255,.9);
+  &-wrapper {display: flex; justify-content: space-between; align-items: center; padding: 10px 0;}
+  &-info {text-align: right;
+    span {margin-right: 20px; font-weight: 600; color: $main-color;}
+  }
+}
+
+
+.logo {display: block; max-width: 150px;
+  img {@include size(100%, 100%);}
+}
+
+.link {color: $main-color; transition: .3s ease-out;
+  &:hover {color: $main-color;}
+}
+
+
+.button {display: inline-block; font-size: 16px; font-weight: 600; padding: 0.375em 1em; @include btnColor($main-color, #fff); cursor: pointer; transition: .3s ease-out; min-width: 260px; text-align: center;
+  &:hover:not([disabled]) {text-decoration: none; @include btnColor(darken($main-color, 15%), #fff);}
+  &:active:not([disabled]) {@include btnColor(darken($main-color, 25%), #fff);}
+  &-transparent {background: none; border: 2px solid #ccc; color: #ccc;
+    &:hover {background:  rgba(0,0,0, .01); border: 2px solid $main-color; color: $main-color;}
+    &:active {background:  rgba(0,0,0, .01); border: 2px solid darken($main-color, 15%); color: darken($main-color, 15%);}
+  }
+  &-block {display: block; width: 100%; min-width: 0;}
+  &[disabled] {opacity: .4; cursor: not-allowed}
+}
+
+
+.form-field {
+  input[type=text], select {width: 100%; padding: .6em 1em; border: none; background-color: #fff; transition: .5s; margin-right: 10px;
+    &:last-of-type {margin-right: 0;}
+  }
+  &-group {display: flex;}
+  &-error {box-shadow: inset 0 0 10px 1px rgba(255, 0, 0, .8);}
+  &-error + &-message {color: #ff0000;}
+}
+
+
+.loader {display: none; position: absolute; @include fullSize(); background: rgba(0,0,0,.8);
+  &::before {content: ''; position: absolute; @include fullSize(); @include size(60px, 60px); border-right: 10px solid transparent; border-top: 10px solid $main-color; margin: auto; border-radius: 50%; animation: spin-left 1s linear infinite;}
+  &::after {content: ''; position: absolute; @include fullSize(); @include size(60px, 60px); border-left: 10px solid transparent; border-bottom: 10px solid #fab; margin: auto; border-radius: 50%; animation: spin-left 1s linear infinite;}
+}
+
+
+.feature {padding: 70px 0;
+  &-header {margin-bottom: 30px;}
+  &-title {font-size: 30px; font-weight: 700; text-align: center; color: $main-color; text-transform: uppercase; margin-bottom: 0;}
+  &-subtitle {font-size: 30px; font-weight: 400; text-align: center;}
+  &-item {display: flex; margin-bottom: 20px;}
+  &-img {@include size(52px, auto); align-self: flex-start; margin-top: 10px;}
+  &-text {padding-left: 30px;}
+  &-name {font-weight: 700; margin-bottom: 10px;}
+}
+
+
+.registration {position: relative; padding: 70px 0; background: url('../img/parallax1.jpg') center no-repeat fixed #ffffff; background-size: cover;
+  &::before {content: ''; position: absolute; @include fullSize(); background: rgba(#000, .75); z-index: 0;}
+  &-form {max-width: 360px;}
+}
+
+
+.offer {display: flex; flex-direction: column; align-items: center; color: #FFF;
+  &-title {font-size: 30px; line-height: 1.1; margin-bottom: 10px;}
+  &-text {font-size: 15px; line-height: 1.1; opacity: .5; margin-bottom: 30px;}
+  &-img {text-align: left;}
+}
+
+.form {position: relative; display: flex; flex-direction: column; margin: 0 auto; background-color: rgba(0,0,0, .5);
+  &-header {font-size: 28px; text-align: center; line-height: 1.1; color: #fff; padding: 15px;}
+  &-body {padding: 30px;}
+  &-label {color: #fff;}
+  &-field {margin-bottom: 1rem;}
+  &-info {color: #fff; font-size: 12px;}
+  &-footer {padding: 30px; padding-top: 0; margin-top: auto;}
+  &-success {position: relative; display: none; @include size(100%, 100%); align-items: center; justify-content: center; text-align: center; color: #fff; font-size: 24px; padding: 30px; flex-direction: column;
+    &::before {position: relative; content: ""; top: -15px; @include size(50px, 50px); background: url('../img/check-mark.svg') center no-repeat; background-size: contain;}
+    span {color: #999; font-size: 14px; margin-top: 10px;}
+  }
+}
+
+
+.catalog {padding: 70px 0; background-color: #F5F5F5;
+  &-img {position: relative; overflow: hidden;
+    img {filter: blur(0px);}
+    // &::before {content: ''; position: absolute; top: 0; left: 0; bottom: 0; right: 0; z-index: 1; background: rgba(#000, .2);}
+    .button {position: absolute; font-size: 24px; font-weight: 700; top: 40%; margin: 0 20px; width: calc(100% - 40px); min-width: 0; z-index: 2;}
+  }
+  &-header {display: flex;}
+  &-body {padding-right: 110px;}
+  &-title {font-size: 40px; font-weight: 600; color: $main-color; text-transform: uppercase;}
+  &-subtitle {font-size: 18px; font-weight: 600; color: $main-color;}
+  &-text {margin: 1rem 0;
+    &-pink {color: $main-color;}
+  }
+  &-group {display: flex; margin-left: auto; flex-wrap: wrap; width: 110px;}
+  &-ctrl {display: block; @include size(55px, 55px); border: none; cursor: pointer; transition: .3s ease-out;
+    &-prev {background: url("../img/left.png") center no-repeat #fff; background-size: 40px;}
+    &-next {background: url("../img/right.png") center no-repeat #000; background-size: 40px;}
+    &:hover {opacity: .7;}
+  }
+  &-info {width: 100%; text-align: right; font-weight: 700; margin-top: 5px;}
+}
+
+
+.reinforcement {position: relative; padding: 70px 0; background: url('../img/parallax2.jpg') center no-repeat fixed #ffffff; background-size: cover;
+  &::before {content: ''; position: absolute; @include fullSize(); background: rgba(#000, .0); z-index: 0;}
+  &-title {font-size: 30px; font-weight: 700; text-align: center; color: #ffffff; text-transform: uppercase; margin-bottom: 20px;}
+  &-text {text-align: center; color: #ffffff; margin-bottom: 20px;}
+  &-button {text-align: center;}
+}
+
+
+.history {padding: 70px 0; background-color: #F5F5F5;
+  &-title {font-size: 30px; font-weight: 700; text-align: center; color: $main-color; text-transform: uppercase; margin-bottom: 1.2em;}
+  &-body  {padding-right: 110px; margin-bottom: 30px;}
+  &-name {font-size: 30px; font-weight: 700; text-transform: uppercase; margin-bottom: .6em;}
+  &-subtitle {font-size: 18px; font-weight: 600; color: $main-color;}
+  &-text {margin: 1rem 0;
+    &-pink {color: $main-color;}
+  }
+  &-button {margin: 1rem 0;}
+}
+
+
+.social {display: flex;
+  &-link {display: inline-block; margin-right: 15px;
+    &:last-of-type {margin-right: 0;}
+    img {@include size(25px, 25px)}
+  }
+}
+
+
+.footer {padding: 20px 0;
+  &-info {font-size: 1rem; margin: .5em 0 1em;}
+  &-copyright {text-align: center; margin-top: 10px;}
+  &-link {color: #000;
+    &:hover {text-decoration: none; color: $main-color;}
+  }
+}
+
+
+.marketing {padding: 50px 0; background: #0f0f0f;
+  &-title {color: $main-color; text-align: center;}
+  .total {color: #FFF;}
+}
+
+.chart {display: flex; align-items: flex-end; justify-content: space-between; padding: 50px 0 25px;
+  &-item {position: relative; width: 100%; height: 100px; background-color: pink; margin-right: 10px;
+    &:last-of-type {background-color: gold; margin-right: 0; margin-left: 10px;}
+  }
+  &-number {position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); color: #fff;}
+  &-sales {position: absolute; top: -50px; right: 0; color: #fff;}
+  &-bonus {position: absolute; top: -30px; right: 0; font-weight: 800; color: gold;}
+}
+
+
+
+
+
+
+/* Animation */
+
+@keyframes spin-left {
+  0% {transform: rotate(0deg)}
+  100% {transform: rotate(360deg)}
+}
+
+
+/* Media */
+
+@media screen and (max-width: $display-xl) {
+
+/**/
+
+}
+
+
+
+@media screen and (max-width: $display-lg) {
+
+/**/
+
+}
+
+
+@media screen and (max-width: $display-md) {
+
+  html {font-size: 13px;}
+
+
+  .header {
+    &-title {font-size: 48px; padding-top: 45%;}
+  }
+
+
+  .feature {padding: 70px 0;
+    &-title {font-size: 24px;}
+    &-subtitle {font-size: 24px;}
+    &-img {width: 42px;}
+  }
+
+
+  .offer {display: flex; flex-direction: column; align-items: center; color: #FFF;
+    &-title {font-size: 24px;}
+    &-text {font-size: 13px;}
+  }
+
+
+  .form {
+    &-header {font-size: 22px;}
+    &-info {font-size: 11px;}
+    &-success {font-size: 20px;}
+  }
+
+
+  .catalog {
+    &-body {padding-right: 0;}
+    &-title {font-size: 34px;}
+    &-subtitle {font-size: 15px;}
+  }
+
+
+  .history {
+    &-body {padding-right: 0;}
+    &-title {font-size: 24px;}
+    &-name {font-size: 24px;}
+    &-subtitle {font-size: 15px;}
+  }
+
+
+  .reinforcement {
+    &-title {font-size: 24px;}
+  }
+
+
+}
+
+
+@media screen and (max-width: $display-sm) {
+
+  html {font-size: 14px;}
+
+
+  .topbar {background-color: #fff; border-top: 5px solid $main-color;
+    &-wrapper {justify-content: center;}
+    &-info {display: none;}
+  }
+
+
+  .header {
+    &-title {font-size: 40px; padding-top: 50%;}
+  }
+
+
+  .feature {padding: 40px 0;
+    &-title {font-size: 22px;}
+    &-subtitle {font-size: 22px;}
+  }
+
+
+  .registration {padding: 40px 0;
+    &-offer {margin-bottom: 50px;}
+  }
+
+
+  .offer {
+    &-title {text-align: center;}
+    &-text {text-align: center;}
+  }
+
+
+  .form {min-height: 320px;}
+
+
+  .catalog {padding: 40px 0;
+    &-header {margin-top: 10px;}
+    &-body {padding-right: 0;}
+    &-title {font-size: 32px;}
+    &-subtitle {font-size: 15px;}
+    &-group {margin-left: 0; flex-wrap: nowrap; width: 100%; justify-content: center; align-items: center;}
+    &-ctrl {min-width: 55px; min-height: 55px; order: 1;}
+    &-info {margin-top: 0; font-size: 1.5rem; order: 0; text-align: left;}
+  }
+
+
+  .history {padding: 40px 0;
+    &-body {padding-right: 0;}
+    &-title {font-size: 22px;}
+    &-name {font-size: 22px; margin-top: .6em;}
+    &-subtitle {font-size: 15px;}
+    &-button {text-align: center;}
+  }
+
+
+  .reinforcement {padding: 40px 0;
+    &-title {font-size: 22px;}
+    &-button {
+      .button {margin: .5rem 0;}
+    }
+  }
+
+
+  .social {justify-content: center;}
+
+
+}
+
+
+@media screen and (max-width: $display-xs) {
+
+  .header {
+    &-title {font-size: 34px;}
+    &-button {
+      .button {font-size: 20px;}
+    }
+  }
+
+
+  .feature {
+    &-title {font-size: 18px;}
+    &-subtitle {font-size: 18;}
+  }
+
+
+  .form {
+    &-success {font-size: 18px;
+      span {font-size: 14px;}
+    }
+  }
+
+
+  .catalog {
+    &-title {font-size: 28px;}
+    &-subtitle {font-size: 15px;}
+    &-info {margin-top: 0; font-size: 1.3rem;}
+  }
+
+
+  .history {
+    &-title {font-size: 18px;}
+    &-name {font-size: 18px;}
+  }
+
+
+  .reinforcement {
+    &-title {font-size: 18px;}
+  }
+
+
+}
